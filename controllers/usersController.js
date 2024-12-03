@@ -22,3 +22,8 @@ exports.updateUser = (req, res) => {
   usersStorage.updateUser(id, { firstName, lastName });
   res.redirect("/");
 };
+exports.deleteUser = (req, res) => {
+  const { id } = req.params;
+  usersStorage.deleteUser(id);
+  res.redirect("/");
+};
