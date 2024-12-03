@@ -11,3 +11,14 @@ exports.createUsers = (req, res) => {
   usersStorage.addUsers({ firstName, lastName });
   res.redirect("/");
 };
+exports.getUpdateUserForm = (req, res) => {
+  const { id } = req.params;
+  const user = usersStorage.storage[id];
+  res.render("updateUser", { user: user });
+};
+exports.updateUser = (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName } = req.body;
+  usersStorage.updateUser(id, { firstName, lastName });
+  res.redirect("/");
+};

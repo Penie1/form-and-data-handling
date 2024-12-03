@@ -11,7 +11,12 @@
     <% if(locals.users.length>0){%>
     <ul>
       <% users.forEach(user=>{ %>
-      <li>ID: <%=user.id%> Name: <%=user.firstName%> <%=user.lastName%></li>
+      <li style="display: flex; gap: 10px">
+        <span
+          >ID: <%=user.id%> Name: <%=user.firstName%> <%=user.lastName%> </span
+        ><a href="/<%=user.id%>/update">Update</a>
+      </li>
+
       <% }) %>
     </ul>
     <%} else{ %>
