@@ -19,6 +19,14 @@ const validateUser = [
 exports.getAllUsers = (req, res) => {
   res.render("index", { users: usersStorage.getUsers() });
 };
+exports.getUserById = (req, res) => {
+  const { id } = req.params;
+
+  if (!usersStorage.getUser(id))
+    return res.status(400).send(`<h1>No user was found with ID ${id}.</h1>`);
+
+  res.render("index", { id: id, users: [usersStorage.getUser(id)] });
+};
 exports.getCreateUserForm = (req, res) => {
   res.render("createUser");
 };
