@@ -1,7 +1,8 @@
 const usersStorage = require("../storages/usersStorage");
-const { body, validationResult } = require("express-validator");
+const { body, validationResult, param } = require("express-validator");
 const alphError = "must only contains letters.";
 const lengthError = "must be between 1 to 10 characters.";
+const validateParam = [param("id").notEmpty().isNumeric()];
 const validateUser = [
   body("firstName")
     .trim()
@@ -19,14 +20,21 @@ const validateUser = [
 exports.getAllUsers = (req, res) => {
   res.render("index", { users: usersStorage.getUsers() });
 };
-exports.getUserById = (req, res) => {
-  const { id } = req.params;
+exports.getUserById = [
+  validateParam,
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next();
+    }
+    const { id } = req.params;
 
-  if (!usersStorage.getUser(id))
-    return res.status(400).send(`<h1>No user was found with ID ${id}.</h1>`);
+    if (!usersStorage.getUser(id))
+      return res.status(400).send(`<h1>No user was found with ID ${id}.</h1>`);
 
-  res.render("index", { id: id, users: [usersStorage.getUser(id)] });
-};
+    res.render("index", { id: id, users: [usersStorage.getUser(id)] });
+  },
+];
 exports.getCreateUserForm = (req, res) => {
   res.render("createUser");
 };
