@@ -7,11 +7,24 @@
   </head>
   <body>
     <h1>Create User</h1>
+    <%- include('./partials/error.ejs') %>
     <form action="/create" method="post">
       <lable for="firstName">First name:</lable>
-      <input type="text" name="firstName" id="firstName" required />
+      <input
+        type="text"
+        name="firstName"
+        id="firstName"
+        value="<% if (locals.errors){ %> <%= firstName %> <%}  %>"
+        required
+      />
       <lable for="lastName">Last name:</lable>
-      <input type="text" name="lastName" id="lastName" required />
+      <input
+        type="text"
+        name="lastName"
+        id="lastName"
+        value="<% if (locals.errors){ %> <%= lastName %> <%}  %>"
+        required
+      />
       <button type="submit">Submit</button>
     </form>
   </body>
