@@ -25,7 +25,7 @@ exports.getUserById = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      next();
+      return next();
     }
     const { id } = req.params;
 
